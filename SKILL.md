@@ -1,6 +1,6 @@
 ---
 name: visual-eng-with-agy
-description: Use only for complex styling-focused visual engineering work delegated through a low-cost general agent that launches agy with Gemini 3.1 Pro. Simple styling tweaks and frontend logic should use a regular general agent instead.
+description: MUST USE for complex styling-focused visual engineering work that needs design judgment, multi-surface consistency, screenshot-driven visual QA, animation choreography, responsive layout work, or broad visual decomposition. Delegates through a low-cost general agent that launches agy with Gemini 3.1 Pro. Do not use for simple styling tweaks or frontend logic; use a regular general agent instead.
 compatibility: opencode
 metadata:
   workflow: visual-engineering
