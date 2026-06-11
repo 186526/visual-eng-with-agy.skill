@@ -8,6 +8,8 @@ The main skill instructions live in `SKILL.md`.
 
 This skill is marked mandatory for complex styling-focused visual engineering tasks. It should be explicitly loaded with `load_skills=["visual-eng-with-agy"]` when a task qualifies, but it should not be loaded for frontend logic or simple styling tweaks.
 
+Do not route qualifying work directly to OMO's `visual-engineering` category first. Use a low-cost general-purpose agent with `load_skills=["visual-eng-with-agy"]` so the `agy` workflow runs before any OMO visual-engineering fallback.
+
 ## Install
 
 Place this directory at one of OpenCode's skill discovery paths, for example:

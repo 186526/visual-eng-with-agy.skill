@@ -17,13 +17,15 @@ Route complex styling-focused visual engineering work through a low-cost general
 
 This skill is mandatory for complex styling-focused visual engineering work that matches the conditions below. When the task qualifies, the orchestrator should load `visual-eng-with-agy` before delegating implementation.
 
+Critical routing rule: do not route qualifying work directly to OMO's `visual-engineering` category first. That bypasses the `agy` workflow by selecting the OMO visual engineering model before this skill can run. For qualifying work, delegate to a low-cost general-purpose agent and load this skill explicitly with `load_skills=["visual-eng-with-agy"]`.
+
 The mandatory marker is intentionally narrow:
 
 - Mandatory for complex visual/styling work that needs design judgment, multi-surface consistency, screenshot-driven QA, or broad visual decomposition.
 - Not mandatory for frontend logic, state, data flow, API wiring, event handling, tests, or behavior changes.
 - Not mandatory for simple styling tweaks that a regular general agent can complete directly.
 
-If the harness supports explicit skill loading, pass `load_skills=["visual-eng-with-agy"]` for qualifying tasks.
+If the harness supports explicit skill loading, pass `load_skills=["visual-eng-with-agy"]` for qualifying tasks and use a low/general implementation category rather than `visual-engineering`.
 
 ## When To Use
 
@@ -76,7 +78,7 @@ The lead agent owns orchestration. The low agent owns the `agy` session. Gemini 
 
 ## Delegation Template
 
-Use the lowest-cost general-purpose implementation category available in the current harness. Keep the delegation atomic and include `load_skills` and `run_in_background` explicitly.
+Use the lowest-cost general-purpose implementation category available in the current harness. Do not use the OMO `visual-engineering` category as the first execution path for qualifying work, because this skill's purpose is to make `agy` the first visual pass. Keep the delegation atomic and include `load_skills` and `run_in_background` explicitly.
 
 ```text
 TASK: Use agy with Gemini 3.1 Pro to implement the styling-focused visual engineering change.
