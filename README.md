@@ -4,6 +4,10 @@ An Oh My OpenAgent/OhMyOpenCode skill for routing complex styling-focused visual
 
 The main skill instructions live in `SKILL.md`.
 
+## Mandatory Scope
+
+This skill is marked mandatory for complex styling-focused visual engineering tasks. It should be explicitly loaded with `load_skills=["visual-eng-with-agy"]` when a task qualifies, but it should not be loaded for frontend logic or simple styling tweaks.
+
 ## Install
 
 Place this directory at one of OpenCode's skill discovery paths, for example:

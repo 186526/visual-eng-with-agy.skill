@@ -6,11 +6,24 @@ metadata:
   workflow: visual-engineering
   router: low-generic-agent
   model: gemini-3.1-pro
+  mandatory: "true"
 ---
 
 # Visual Engineering With agy
 
 Route complex styling-focused visual engineering work through a low-cost general agent that runs `agy` with Gemini 3.1 Pro, while keeping the lead agent responsible for scope, review, and verification.
+
+## Mandatory Loading
+
+This skill is mandatory for complex styling-focused visual engineering work that matches the conditions below. When the task qualifies, the orchestrator should load `visual-eng-with-agy` before delegating implementation.
+
+The mandatory marker is intentionally narrow:
+
+- Mandatory for complex visual/styling work that needs design judgment, multi-surface consistency, screenshot-driven QA, or broad visual decomposition.
+- Not mandatory for frontend logic, state, data flow, API wiring, event handling, tests, or behavior changes.
+- Not mandatory for simple styling tweaks that a regular general agent can complete directly.
+
+If the harness supports explicit skill loading, pass `load_skills=["visual-eng-with-agy"]` for qualifying tasks.
 
 ## When To Use
 
