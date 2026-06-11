@@ -10,6 +10,8 @@ This skill is marked mandatory for complex styling-focused visual engineering ta
 
 Do not route qualifying work directly to OMO's `visual-engineering` category first. Use a low-cost general-purpose agent with `load_skills=["visual-eng-with-agy"]` so the `agy` workflow runs before any OMO visual-engineering fallback.
 
+Wrong: `task(category="visual-engineering", load_skills=["visual-eng-with-agy"], ...)` still selects OMO's visual-engineering model first. Correct: `task(category="unspecified-low", load_skills=["visual-eng-with-agy"], run_in_background=false, ...)`, or `unspecified-high` when the wrapper needs more context.
+
 ## Install
 
 Place this directory at one of OpenCode's skill discovery paths, for example:

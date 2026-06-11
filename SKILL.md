@@ -27,6 +27,22 @@ The mandatory marker is intentionally narrow:
 
 If the harness supports explicit skill loading, pass `load_skills=["visual-eng-with-agy"]` for qualifying tasks and use a low/general implementation category rather than `visual-engineering`.
 
+## Correct Task Routing Examples
+
+Wrong: this loads the skill text but still routes execution through OMO's visual-engineering model, so `agy` may never run.
+
+```text
+task(category="visual-engineering", load_skills=["visual-eng-with-agy"], run_in_background=false, prompt="...")
+```
+
+Correct for complex styling work: use a low/general category and load this skill so the wrapper agent follows the `agy` workflow.
+
+```text
+task(category="unspecified-low", load_skills=["visual-eng-with-agy"], run_in_background=false, prompt="Launch agy with Gemini 3.1 Pro per the visual-eng-with-agy skill. First decompose the visual task, then execute one atomic visual change per agy run.")
+```
+
+Use `unspecified-high` instead of `unspecified-low` only when the wrapper work itself needs more reasoning or broader project context. Do not use `visual-engineering` as the first category for this skill; reserve OMO visual-engineering for the fallback chain when `agy` is unavailable.
+
 ## When To Use
 
 Use this skill when all of these are true:
