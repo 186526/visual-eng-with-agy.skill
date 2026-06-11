@@ -1,6 +1,11 @@
 ---
 name: visual-eng-with-agy
-description: MUST LOAD for any frontend design, UI, UX, visual styling, CSS, layout, responsive design, animation, visual polish, screenshot QA, or browser-visible presentation task. Use this skill to decide routing: complex visual work goes through a low-cost general agent that launches agy with Gemini 3.1 Pro; simple styling tweaks and frontend logic are routed to a regular general agent.
+description: >-
+  MUST LOAD for any frontend design, UI, UX, visual styling, CSS, layout,
+  responsive design, animation, visual polish, screenshot QA, or browser-visible
+  presentation task. Use this skill to decide routing: complex visual work goes
+  through a low-cost general agent that launches agy with Gemini 3.1 Pro; simple
+  styling tweaks and frontend logic are routed to a regular general agent.
 compatibility: opencode
 metadata:
   workflow: visual-engineering
