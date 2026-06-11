@@ -12,6 +12,10 @@ Do not route qualifying work directly to OMO's `visual-engineering` category fir
 
 Wrong: `task(category="visual-engineering", load_skills=["visual-eng-with-agy"], ...)` still selects OMO's visual-engineering model first. Correct: `task(category="unspecified-low", load_skills=["visual-eng-with-agy"], run_in_background=false, ...)`, or `unspecified-high` when the wrapper needs more context.
 
+Review-only tasks must also launch `agy` first. A prompt like "review this visual change without editing files" must still say: `You MUST launch agy with Gemini 3.1 Pro first; if agy is unavailable, report why before fallback.`
+
+The lead agent must also state the route. If it does not use `agy`, it must explain why before delegating, and the subagent prompt must require: `Report whether agy was launched; if not, explain the exact reason and fallback route.`
+
 ## Install
 
 Place this directory at one of OpenCode's skill discovery paths, for example:

@@ -43,6 +43,22 @@ task(category="unspecified-low", load_skills=["visual-eng-with-agy"], run_in_bac
 
 Use `unspecified-high` instead of `unspecified-low` only when the wrapper work itself needs more reasoning or broader project context. Do not use `visual-engineering` as the first category for this skill; reserve OMO visual-engineering for the fallback chain when `agy` is unavailable.
 
+Correct for complex visual review or static audit tasks: still require the wrapper agent to launch `agy` first. Review-only does not mean agy-optional.
+
+```text
+task(category="unspecified-low", load_skills=["visual-eng-with-agy"], run_in_background=false, prompt="Review this visual change without editing files. You MUST launch agy with Gemini 3.1 Pro first and use its output as the review basis. If agy is unavailable, report why before using any fallback.")
+```
+
+## Lead Route Accountability
+
+The lead agent must always state the intended route before delegating a qualifying frontend design task:
+
+- If using `agy`, say that the subagent must launch `agy` first and include the exact `agy` requirement in the subagent prompt.
+- If not using `agy`, explain why this route does not use `agy` before delegating: simple styling tweak, frontend logic, `agy` unavailable, unauthenticated, timeout, or explicit user override.
+- The subagent prompt must require the subagent to report whether it launched `agy` and, if not, the exact reason.
+- A subagent response that omits whether `agy` was launched is incomplete and must be followed up before accepting the result.
+- Review-only and no-edit tasks still need this route statement.
+
 ## When To Use
 
 Use this skill when all of these are true:
@@ -92,6 +108,16 @@ The lead agent owns orchestration. The low agent owns the `agy` session. Gemini 
 6. If the OMO visual-engineering path is unavailable too, use the best available general agent that can complete the styling task, while reporting the fallback reason.
 7. Lead agent reads every touched file, runs diagnostics and tests, and performs browser/manual QA when UI behavior is visible.
 
+## Review Mode
+
+For complex visual review, QA, critique, screenshot audit, or static inspection tasks, this skill still requires an `agy` pass even if no file edits are requested.
+
+- The wrapper agent must launch `agy --model gemini-3.1-pro --print` before producing the review.
+- The prompt must explicitly say whether the task is review-only or edit-producing.
+- For review-only tasks, ask `agy` for findings, visual risks, missing polish, responsive issues, accessibility presentation issues, and suggested atomic follow-up changes.
+- Do not let the wrapper agent complete the task with only its own static review when `agy` is available and authenticated.
+- If `agy` is unavailable, blocked by authentication, or times out, the wrapper agent must state the reason and then use the fallback chain.
+
 ## Delegation Template
 
 Use the lowest-cost general-purpose implementation category available in the current harness. Do not use the OMO `visual-engineering` category as the first execution path for qualifying work, because this skill's purpose is to make `agy` the first visual pass. Keep the delegation atomic and include `load_skills` and `run_in_background` explicitly.
@@ -105,6 +131,8 @@ REQUIRED TOOLS: shell for launching agy, file read/edit tools for the target pro
 
 MUST DO:
 - Inspect existing UI patterns before editing.
+- Launch agy with Gemini 3.1 Pro before any final review or implementation output, including review-only tasks.
+- State in the final response whether agy was launched. If agy was not launched, state the exact reason and fallback route used.
 - Launch agy with Gemini 3.1 Pro first to decompose the complex visual task into atomic visual changes.
 - Launch agy separately for each atomic visual change instead of asking one agy run to implement the full visual task.
 - Give agy the exact user request, target files/routes, design constraints, and verification requirements.
@@ -116,6 +144,8 @@ MUST DO:
 
 MUST NOT DO:
 - Do not bypass agy when it is available and authenticated.
+- Do not complete a complex visual review, audit, or static inspection without launching agy first.
+- Do not return a result without saying whether agy was launched.
 - Do not ask one agy run to implement a large multi-part visual change; split first, then execute one atomic change per agy run.
 - Do not use any model other than Gemini 3.1 Pro for the agy visual pass.
 - Do not implement frontend logic, state management, API wiring, or behavior changes through this skill.
@@ -157,9 +187,16 @@ The brief passed to `agy` must include:
 - Existing design constraints and patterns discovered during context gathering.
 - The expected aesthetic direction or the instruction to infer one from product context.
 - Whether the prompt is for decomposition or for one atomic execution step.
+- Whether the task is review-only or edit-producing.
 - For execution prompts, the single atomic visual change to implement and the previous completed changes, if any.
 - Verification requirements: diagnostics, focused tests, build when applicable, and browser/manual QA for visible behavior.
 - Scope limits: no unrelated refactors, no commits, no dependency changes unless explicitly required.
+
+The prompt passed to the wrapper subagent must include:
+
+- `You MUST report whether agy was launched.`
+- `If agy was not launched, explain the exact reason and the fallback route used.`
+- `Do not return a final answer that omits agy usage status.`
 
 ## Visual Engineering Standards
 
