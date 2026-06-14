@@ -4,6 +4,10 @@ An Oh My OpenAgent/OhMyOpenCode skill for routing complex styling-focused visual
 
 The main skill instructions live in `SKILL.md`.
 
+## agy and Antigravity Ignore Rule
+
+This skill is only for OpenCode/Sisyphus/Oh My OpenAgent routing before launching `agy`. If Antigravity CLI, `agy`, or an `agy`-spawned agent loads this skill, it must ignore the skill and continue with the actual user prompt. It must not recursively apply the routing rules or launch another `agy` process because of this skill.
+
 ## Mandatory Scope
 
 This skill is marked mandatory for complex styling-focused visual engineering tasks. It should be explicitly loaded with `load_skills=["visual-eng-with-agy"]` when a task qualifies, but it should not be loaded for frontend logic or simple styling tweaks.

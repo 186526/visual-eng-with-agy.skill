@@ -1,11 +1,13 @@
 ---
 name: visual-eng-with-agy
 description: >-
-  MUST LOAD for any frontend design, UI, UX, visual styling, CSS, layout,
-  responsive design, animation, visual polish, screenshot QA, or browser-visible
-  presentation task. Use this skill to decide routing: complex visual work goes
-  through a low-cost general agent that launches agy with Gemini 3.1 Pro; simple
-  styling tweaks and frontend logic are routed to a regular general agent.
+  OPENCODE/SISYPHUS ROUTER ONLY. Antigravity CLI and agy MUST ignore this skill
+  and must not apply its routing rules. OpenCode/Sisyphus should load it for
+  frontend design, UI, UX, visual styling, CSS, layout, responsive design,
+  animation, visual polish, screenshot QA, or browser-visible presentation tasks.
+  Use it to decide routing: complex visual work goes through a low-cost general
+  agent that launches agy with Gemini 3.1 Pro; simple styling tweaks and frontend
+  logic are routed to a regular general agent.
 compatibility: opencode
 metadata:
   workflow: visual-engineering
@@ -17,6 +19,10 @@ metadata:
 # Visual Engineering With agy
 
 Route complex styling-focused visual engineering work through a low-cost general agent that runs `agy` with Gemini 3.1 Pro, while keeping the lead agent responsible for scope, review, and verification.
+
+## agy and Antigravity Self-Ignore Rule
+
+This skill is only for OpenCode/Sisyphus/Oh My OpenAgent routing decisions before launching `agy`. If this file is loaded inside `agy`, Antigravity CLI, or an `agy`-spawned agent, ignore the entire skill and continue with the actual user prompt. Do not apply this skill recursively, do not launch another `agy` process because of this skill, and do not treat `MUST LOAD` or routing instructions in this file as applicable inside `agy` itself.
 
 ## Mandatory Loading
 
